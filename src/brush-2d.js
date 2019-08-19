@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {scaleTime} from 'd3-scale';
 import {timeHour, timeMonth, timeWeek, timeDay} from 'd3-time';
 import {timeFormat} from 'd3-time-format';
+import SVGBrush from 'react-svg-brush';
 
 const WIDTH = 800;
 const HEIGHT = 120;
@@ -64,6 +65,7 @@ export default class Brush2D extends PureComponent {
                 x={x + 3}
                 y={HEIGHT - MARGIN.BOTTOM + 4}
                 dominantBaseline="hanging"
+                fontSize={10}
               >
                 {timeFormat(t)}
               </text>
@@ -73,12 +75,28 @@ export default class Brush2D extends PureComponent {
       </React.Fragment>
     );
   }
-  _renderBrush() {}
+  _renderBrush() {
+    return (
+      <SVGBrush
+        extent={[
+          [MARGIN.LEFT, MARGIN.TOP],
+          [MARGIN.LEFT + WIDTH - MARGIN.RIGHT, HEIGHT - MARGIN.BOTTOM]
+        ]}
+        getEventMouse={event => {
+          const {clientX, clientY} = event;
+          const {left, top} = this.svg.getBoundingClientRect();
+          return [clientX - left, clientY - top];
+        }}
+        brushType="x"
+      />
+    );
+  }
   render() {
     return (
-      <svg width={WIDTH} height={HEIGHT}>
+      <svg width={WIDTH} height={HEIGHT} ref={input => (this.svg = input)}>
         {this._renderBackground()}
         {this._renderAxis()}
+        {this._renderBrush()}
       </svg>
     );
   }
