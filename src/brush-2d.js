@@ -48,7 +48,6 @@ export default class Brush2D extends PureComponent {
         })}
         {scale.ticks(timeDay).map(t => {
           const x = scale(t);
-          console.log(timeFormat(t));
           return (
             <React.Fragment key={t.toString()}>
               <line
