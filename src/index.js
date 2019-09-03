@@ -1,16 +1,13 @@
 import React, {PureComponent} from 'react';
-import {Layout, Divider} from 'antd';
 import Brush2D from './brush-2d';
 import Brush3D from './brush-3d';
+import BrushTransition from './brush-transition';
 
 export default class Main extends PureComponent {
   render() {
     return (
-      <Layout>
-        <Layout.Header>
-          <span style={{color: 'white', fontSize: 20}}>Examples</span>
-        </Layout.Header>
-        <Layout.Content style={{backgroundColor: 'white', paddingLeft: 10}}>
+      <React.Fragment>
+        <div style={{backgroundColor: 'white', paddingLeft: 10}}>
           <div style={{display: 'flex', alignItems: 'center', height: 40}}>
             2D Brush
           </div>
@@ -23,8 +20,14 @@ export default class Main extends PureComponent {
           <div style={{height: 400}}>
             <Brush3D />
           </div>
-        </Layout.Content>
-      </Layout>
+          <div style={{display: 'flex', alignItems: 'center', height: 40}}>
+            Brush Snapping (Transition)
+          </div>
+          <div style={{height: 200}}>
+            <BrushTransition />
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
