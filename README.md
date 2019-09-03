@@ -9,5 +9,4 @@ yarn
 yarn start
 ```
 
-Then contents will be displayed in:
-localhost:8000
+Then contents will be displayed in localhost:8000
