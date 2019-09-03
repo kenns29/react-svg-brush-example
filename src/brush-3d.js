@@ -116,11 +116,11 @@ export default class brush3D extends PureComponent {
     const makeInSelection = (x, y) => {
       if (brushSelection) {
         // swap y1 and y2 due to inverted y scale
-        const [[x1, y2], [x2, y1]] = brushSelection.map(([x, y]) => [
+        const [[x0, y1], [x1, y0]] = brushSelection.map(([x, y]) => [
           xScale.invert(x),
           yScale.invert(y)
         ]);
-        return (x, y) => x >= x1 && x <= x2 && y >= y1 && y <= y2;
+        return (x, y) => x >= x0 && x <= x1 && y >= y0 && y <= y1;
       }
       return () => false;
     };

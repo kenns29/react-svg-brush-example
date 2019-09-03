@@ -6,6 +6,11 @@ module.exports = {
     app: resolve('./app.js')
   },
   devtool: 'source-maps',
+  resolve: {
+    alias: {
+      'react-svg-brush': resolve('../react-svg-brush')
+    }
+  },
   module: {
     rules: [
       {
