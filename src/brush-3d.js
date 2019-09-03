@@ -22,6 +22,22 @@ const randomScatter = Array(50)
 export default class brush3D extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      brushSelection: null
+    };
+  }
+  _renderBackground() {
+    return (
+      <React.Fragment>
+        <rect
+          x={MARGIN.LEFT}
+          y={MARGIN.TOP}
+          width={WIDTH - MARGIN.LEFT - MARGIN.RIGHT}
+          height={HEIGHT - MARGIN.BOTTOM - MARGIN.TOP}
+          fill="white"
+        />
+      </React.Fragment>
+    );
   }
   _renderAxises() {
     return (
@@ -95,11 +111,60 @@ export default class brush3D extends PureComponent {
       </React.Fragment>
     );
   }
-  _renderScatter() {}
+  _renderScatter() {
+    const {brushSelection} = this.state;
+    const makeInSelection = (x, y) => {
+      if (brushSelection) {
+        // swap y1 and y2 due to inverted y scale
+        const [[x1, y2], [x2, y1]] = brushSelection.map(([x, y]) => [
+          xScale.invert(x),
+          yScale.invert(y)
+        ]);
+        return (x, y) => x >= x1 && x <= x2 && y >= y1 && y <= y2;
+      }
+      return () => false;
+    };
+    const inSelection = makeInSelection();
+    return (
+      <React.Fragment>
+        {randomScatter.map(([x, y], i) => (
+          <circle
+            key={i}
+            cx={xScale(x)}
+            cy={yScale(y)}
+            r={2}
+            fill={inSelection(x, y) ? 'orange' : 'grey'}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+  _renderBrush() {
+    return (
+      <SVGBrush
+        extent={[
+          [MARGIN.LEFT, MARGIN.TOP],
+          [MARGIN.LEFT + WIDTH - MARGIN.RIGHT, HEIGHT - MARGIN.BOTTOM]
+        ]}
+        getEventMouse={event => {
+          const {clientX, clientY} = event;
+          const {left, top} = this.svg.getBoundingClientRect();
+          return [clientX - left, clientY - top];
+        }}
+        brushType="2d"
+        onBrush={({selection}) => {
+          this.setState({brushSelection: selection});
+        }}
+      />
+    );
+  }
   render() {
     return (
       <svg width={WIDTH} height={HEIGHT} ref={input => (this.svg = input)}>
+        {this._renderBackground()}
         {this._renderAxises()}
+        {this._renderScatter()}
+        {this._renderBrush()}
       </svg>
     );
   }
