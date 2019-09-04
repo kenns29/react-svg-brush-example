@@ -38,7 +38,6 @@ export default class BrushTransition extends PureComponent {
   }
   _renderAxis() {
     const timeFormat = getMultiScaleTimeFormat();
-    const interval = timeHour.every(12);
 
     return (
       <React.Fragment>
