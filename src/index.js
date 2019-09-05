@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
+import Brush1D from './brush-1d';
 import Brush2D from './brush-2d';
-import Brush3D from './brush-3d';
 import BrushTransition from './brush-transition';
 
 export default class Main extends PureComponent {
@@ -9,16 +9,16 @@ export default class Main extends PureComponent {
       <React.Fragment>
         <div style={{backgroundColor: 'white', paddingLeft: 10}}>
           <div style={{display: 'flex', alignItems: 'center', height: 40}}>
-            2D Brush
+            1D Brush
           </div>
           <div style={{height: 200}}>
-            <Brush2D />
+            <Brush1D />
           </div>
           <div style={{display: 'flex', alignItems: 'center', height: 40}}>
-            3D Brush
+            2D Brush
           </div>
           <div style={{height: 400}}>
-            <Brush3D />
+            <Brush2D />
           </div>
           <div style={{display: 'flex', alignItems: 'center', height: 40}}>
             Brush Snapping (Transition)
