@@ -85,8 +85,8 @@ export default class BrushTransition extends PureComponent {
     );
   }
   _renderBrush() {
-    const {brushSelection, interBrushSelection} = this.state;
-    const fs = interBrushSelection || brushSelection;
+    const {brushSelection, intermediateBrushSelection} = this.state;
+    const fs = intermediateBrushSelection || brushSelection;
     const ts = brushSelection;
     const [[fx0, fy0], [fx1, fy1]] = fs || [[0, 0], [0, 0]];
     const [[tx0, ty0], [tx1, ty1]] = ts || [[0, 0], [0, 0]];
@@ -94,7 +94,7 @@ export default class BrushTransition extends PureComponent {
       <Spring
         from={{x0: fx0, y0: fy0, x1: fx1, y1: fy1}}
         to={{x0: tx0, y0: ty0, x1: tx1, y1: ty1}}
-        immediate={!interBrushSelection}
+        immediate={!intermediateBrushSelection}
       >
         {props => (
           <SVGBrush
@@ -114,11 +114,15 @@ export default class BrushTransition extends PureComponent {
             onBrush={({selection}) => {
               this.setState({
                 brushSelection: selection,
-                interBrushSelection: null
+                intermediateBrushSelection: null
               });
             }}
             onBrushEnd={({selection}) => {
               if (!selection) {
+                this.setState({
+                  brushSelection: null,
+                  intermediateBrushSelection: null
+                });
                 return;
               }
               const [[x0, y0], [x1, y1]] = selection;
@@ -128,7 +132,7 @@ export default class BrushTransition extends PureComponent {
               const [rx0, rx1] = [v0, v1].map(scale);
               this.setState({
                 brushSelection: [[rx0, y0], [rx1, y1]],
-                interBrushSelection: [[x0, y0], [x1, y1]]
+                intermediateBrushSelection: [[x0, y0], [x1, y1]]
               });
             }}
           />
