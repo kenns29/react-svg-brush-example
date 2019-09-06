@@ -144,7 +144,7 @@ export default class brush2D extends PureComponent {
       <SVGBrush
         extent={[
           [MARGIN.LEFT, MARGIN.TOP],
-          [MARGIN.LEFT + WIDTH - MARGIN.RIGHT, HEIGHT - MARGIN.BOTTOM]
+          [WIDTH - MARGIN.RIGHT, HEIGHT - MARGIN.BOTTOM]
         ]}
         getEventMouse={event => {
           const {clientX, clientY} = event;
