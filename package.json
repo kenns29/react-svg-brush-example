@@ -7,8 +7,7 @@
     "email": "kennsmacintosh@gmail.com"
   },
   "scripts": {
-    "start": "webpack-dev-server --progress --hot",
-    "watch": "webpack --watch"
+    "start": "webpack-dev-server --progress --hot"
   },
   "repository": "https://github.com/kenns29/react-svg-brush-example",
   "dependencies": {
